@@ -85,9 +85,9 @@ module.exports = config =
             # insert all loaded values
             inplace_merge config, conf
             # when sync call, callback is undefined
-            callback?.call this, args, opts
+            callback?.apply this, arguments
 
-        load_configs = ->
+        load_configs = (args...) ->
             # put configs ontop of defaults
             if options['ignore unknown']
                 if callback?
@@ -98,7 +98,7 @@ module.exports = config =
                             callback(null, file)
                     async.map files, iter, (err, existing_files) =>
                         conf = deep_merge conf, load_files existing_files...
-                        finish.apply this, arguments
+                        finish.apply this, args
                 else
                     # sync call
                     existing_files = []
@@ -109,10 +109,10 @@ module.exports = config =
                         catch e
                             # do nothing
                     conf = deep_merge conf, load_files existing_files...
-                    finish.apply this, arguments
+                    finish.apply this, args
             else
                 conf = deep_merge conf, load_files files...
-                finish.apply this, arguments
+                finish.apply this, args
 
 
         # set a default cli invoke when enabled andnot function is given

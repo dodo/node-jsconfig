@@ -20,6 +20,6 @@ config.cli({
     test: [false, "change the config type!", 'string'],
 });
 
-config.load(__dirname+'/config.js', function () {
-    console.log(config);
+config.load(__dirname+'/config.js', function (args, opts) {
+    console.log(args, opts, config);
 });
