@@ -14,6 +14,11 @@ options =
 
 
 module.exports = config =
+
+    merge: (more) ->
+        inplace_merge config, more
+        return this
+
     defaults: (files...) ->
         defaults = deep_merge defaults, load_files files...
         return this

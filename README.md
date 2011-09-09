@@ -81,6 +81,14 @@ config.cli({
 this sets up the command line interface. its basicly [node-cli](https://github.com/chriso/cli) with on little change: if cli result should be saved in config,
 the cli-array should be packed into a second (outer) array as second element (the first is the position in the config object).
 
+### config.merge
 
+```javascript
+config.merge({user:{name:'foo'}});
+// or
+config.merge(require('./hot-config.js'));
+```
+
+deep copy new values into config.
 
 
