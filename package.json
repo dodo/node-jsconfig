@@ -1,0 +1,17 @@
+{ "name": "jsconfig"
+, "description": "async configuration loader with cli support"
+, "version": "0.0.1"
+, "homepage": "https://github.com/dodo/node-jsconfig"
+, "author": "dodo (https://github.com/dodo)"
+, "repository": {"type": "git", "url": "git://github.com/dodo/node-jsconfig.git"}
+, "main": "jsconfig.js"
+, "engines": {"node": "0.4.x"}
+, "keywords": ["configure", "configuration", "async"]
+, "scripts": {
+    "preinstall": "#preinstall DO NOTHING",
+    "install": "node-waf configure build",
+    "update": "node-waf build"}
+, "dependencies": {
+    "cli": ">= 0.3.7",
+    "coffee-script": ">= 1.1.2"}
+}
