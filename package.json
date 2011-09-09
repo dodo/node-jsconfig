@@ -13,5 +13,6 @@
     "update": "node-waf build"}
 , "dependencies": {
     "cli": ">= 0.3.7",
+    "async": ">= 0.1.9",
     "coffee-script": ">= 1.1.2"}
 }

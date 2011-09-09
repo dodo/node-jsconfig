@@ -1,4 +1,6 @@
+fs = require 'fs'
 cli = require 'cli'
+async = require 'async'
 { deep_merge, deep_set, deep_get, inplace_merge, load_files } = require './util'
 { isArray } = Array
 
@@ -59,8 +61,6 @@ module.exports = config =
 
         # callback for when cli is ready or sync call
         finish = (args, opts) ->
-            # put configs ontop of defaults
-            conf = deep_merge conf, load_files files...
             # environment has higher priority .. so we put it on top again
             for key, target of map.env
                 continue unless process.env[key]?
@@ -85,7 +85,35 @@ module.exports = config =
             # insert all loaded values
             inplace_merge config, conf
             # when sync call, callback is undefined
-            callback? args, opts
+            callback?.call this, args, opts
+
+        load_configs = ->
+            # put configs ontop of defaults
+            if options['ignore unknown']
+                if callback?
+                    # async call
+                    iter = (file, callback) ->
+                        fs.stat file, (err) ->
+                            return callback(err) if err
+                            callback(null, file)
+                    async.map files, iter, (err, existing_files) =>
+                        conf = deep_merge conf, load_files existing_files...
+                        finish.apply this, arguments
+                else
+                    # sync call
+                    existing_files = []
+                    for file in files
+                        try
+                            fs.statSync(file)
+                            existing_files.push file
+                        catch e
+                            # do nothing
+                    conf = deep_merge conf, load_files existing_files...
+                    finish.apply this, arguments
+            else
+                conf = deep_merge conf, load_files files...
+                finish.apply this, arguments
+
 
         # set a default cli invoke when enabled andnot function is given
         unless options['cli'] is no or typeof options['cli'] is 'function'
@@ -111,8 +139,8 @@ module.exports = config =
                         value.push deep_get conf, map.opts[key]
                 cli.parse options['cli parse']
             # async call
-            options['cli'] finish
+            options['cli'] load_configs
             return
         else
             # sync call
-            return finish()
+            return load_configs()
