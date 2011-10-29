@@ -43,6 +43,7 @@ inplace_merge = (target, obj) ->
 load_files = (files...) ->
     conf = {}
     for file in files
+        continue unless file?.length
         conf = deep_merge conf, require(file)
     conf
 
