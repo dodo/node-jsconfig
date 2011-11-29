@@ -5,7 +5,7 @@
 , "author": "dodo (https://github.com/dodo)"
 , "repository": {"type": "git", "url": "git://github.com/dodo/node-jsconfig.git"}
 , "main": "jsconfig.js"
-, "engines": {"node": "0.4.x"}
+, "engines": {"node": ">= 0.4.x"}
 , "keywords": ["configure", "configuration", "async"]
 , "scripts": {
     "preinstall": "#preinstall DO NOTHING",
