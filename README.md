@@ -8,7 +8,7 @@ loading configs from javascript files with default configs and cli support
 
 ## usage
 
-jsconfig can load config file formats whatever node.js can require:
+jsconfig can load config file formats whatever [node.js can require](http://nodejs.org/docs/latest/api/modules.html#file_Modules):
 
 * by default it's always possible to load `*.js` files
 * if you want to use coffee-script config files, just do a require('coffee-script') before and you're able to require `*.coffee` files as well
