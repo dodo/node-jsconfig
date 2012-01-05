@@ -1,2 +1,2 @@
 
-module.exports = require('./build/default/jsconfig')
+module.exports = require('./lib/jsconfig')

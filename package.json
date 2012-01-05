@@ -8,12 +8,12 @@
 , "engines": {"node": ">= 0.4.x"}
 , "keywords": ["configure", "configuration", "async"]
 , "scripts": {
-    "preinstall": "#preinstall DO NOTHING",
-    "install": "node-waf configure build",
-    "update": "node-waf build"}
+    "pre-publish": "cake build"}
 , "dependencies": {
     "cli": ">= 0.3.7",
-    "async": ">= 0.1.9",
+    "async": ">= 0.1.9"}
+, "devDependencies": {
+    "muffin": ">= 0.2.6",
     "coffee-script": ">= 1.1.2"}
 , "licenses" : [
     { "type": "MIT" ,
