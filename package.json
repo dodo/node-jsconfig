@@ -8,7 +8,7 @@
 , "engines": {"node": ">= 0.4.x"}
 , "keywords": ["configure", "configuration", "async"]
 , "scripts": {
-    "pre-publish": "cake build"}
+    "prepublish": "cake build"}
 , "dependencies": {
     "cli": ">= 0.3.7",
     "async": ">= 0.1.9"}
