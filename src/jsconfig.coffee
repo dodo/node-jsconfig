@@ -1,7 +1,6 @@
-fs = require 'fs'
 cli = require 'cli'
-async = require 'async'
-{ deep_merge, deep_set, deep_get, inplace_merge, load_files } = require './util'
+{ deep_merge, deep_set, deep_get, inplace_merge,
+  load_files, ruthless_load_files } = require './util'
 { isArray } = Array
 
 
@@ -104,29 +103,10 @@ module.exports = config =
         load_configs = (args...) ->
             # put configs ontop of defaults
             if options['ignore unknown']
-                if callback?
-                    # async call
-                    iter = (file, callback) ->
-                        fs.stat file, (err) ->
-                            return callback(err) if err
-                            callback(null, file)
-                    async.map files, iter, (err, existing_files) ->
-                        conf = deep_merge conf, load_files existing_files...
-                        finish args...
-                else
-                    # sync call
-                    existing_files = []
-                    for file in files
-                        try
-                            fs.statSync(file)
-                            existing_files.push file
-                        catch e
-                            # do nothing
-                    conf = deep_merge conf, load_files existing_files...
-                    finish args...
+                conf = deep_merge conf, ruthless_load_files files...
             else
                 conf = deep_merge conf, load_files files...
-                finish args...
+            finish args...
 
 
         # set a default cli invoke when enabled andnot function is given

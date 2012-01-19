@@ -10,8 +10,7 @@
 , "scripts": {
     "prepublish": "cake build"}
 , "dependencies": {
-    "cli": ">= 0.3.7",
-    "async": ">= 0.1.9"}
+    "cli": ">= 0.3.7"}
 , "devDependencies": {
     "muffin": ">= 0.2.6",
     "coffee-script": ">= 1.1.2"}

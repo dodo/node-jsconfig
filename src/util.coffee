@@ -40,12 +40,31 @@ inplace_merge = (target, obj) ->
     target
 
 
-load_files = (files...) ->
+_load_files = (files, callback) ->
     conf = {}
     for file in files
         continue unless file?.length
-        conf = deep_merge conf, require(file)
+        console.log file
+        conf = deep_merge conf, (callback(file) or {})
     conf
 
+load_files = (files...) ->
+    _load_files files, (file) ->
+        require(file)
 
-module.exports = { deep_merge, deep_set, deep_get, inplace_merge, load_files }
+ruthless_load_files = (files...) ->
+    _load_files files, (file) ->
+        try
+            return require(file)
+        catch err
+            console.error("Cannot find config '#{file}'.")
+
+
+module.exports = {
+    deep_merge,
+    deep_set,
+    deep_get,
+    inplace_merge,
+    load_files,
+    ruthless_load_files,
+}
