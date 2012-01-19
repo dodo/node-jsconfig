@@ -15,6 +15,19 @@ options =
 module.exports = config =
 
     merge: (more) ->
+        files = undefined
+        # check if a filename or a list of filenames is applied
+        if typeof more is 'string'
+            files = [more]
+        else if isArray(more)
+            files = more
+        # load files
+        if files?
+            if options['ignore unknown']
+                more = ruthless_load_files files...
+            else
+                more = load_files files...
+        # merge into config
         inplace_merge config, more
         return this
 

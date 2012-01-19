@@ -92,7 +92,7 @@ the cli-array should be packed into a second (outer) array as second element (th
 ```javascript
 config.merge({user:{name:'foo'}});
 // or
-config.merge(require('./hot-config.js'));
+config.merge('./hot-config.js');
 ```
 
 deep copy new values into config.
