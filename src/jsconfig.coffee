@@ -75,13 +75,16 @@ module.exports = config =
                 else
                     deep_set conf, target, process.env[key]
 
+            # these contains all options that differ from their default value
+            optsdiff = {}
             if opts?
                 # merge options into config
                 for key, target of map.opts
                     continue unless opts[key]
                     # only set when differs from defaults
                     continue if opts[key] is deep_get(defaults, target)
-                    deep_set conf, target, opts[key]
+                    deep_set optsdiff, target, opts[key]
+                    deep_set conf,     target, opts[key]
             # remove loader code
             for key in ['defaults', 'set', 'cli', 'load']
                 delete config[key]
@@ -89,6 +92,12 @@ module.exports = config =
             defaults = {}
             # insert all loaded values
             inplace_merge config, conf
+            # monkey patch merge to apply set opts to config again
+            old_merge = @merge
+            @merge = ->
+                result = old_merge(arguments...)
+                inplace_merge config, optsdiff
+                return result
             # when sync call, callback is undefined
             callback?.apply this, arguments
 
