@@ -44,7 +44,6 @@ _load_files = (files, callback) ->
     conf = {}
     for file in files
         continue unless file?.length
-        console.log file
         conf = deep_merge conf, (callback(file) or {})
     conf
 
