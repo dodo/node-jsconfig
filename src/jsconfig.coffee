@@ -65,7 +65,7 @@ module.exports = config =
         conf = deep_merge {}, defaults
 
         # callback for when cli is ready or sync call
-        finish = (args, opts) ->
+        finish = (args, opts) =>
             # environment has higher priority .. so we put it on top again
             for key, target of map.env
                 continue unless process.env[key]?
@@ -101,9 +101,9 @@ module.exports = config =
                         fs.stat file, (err) ->
                             return callback(err) if err
                             callback(null, file)
-                    async.map files, iter, (err, existing_files) =>
+                    async.map files, iter, (err, existing_files) ->
                         conf = deep_merge conf, load_files existing_files...
-                        finish.apply this, args
+                        finish args...
                 else
                     # sync call
                     existing_files = []
@@ -114,10 +114,10 @@ module.exports = config =
                         catch e
                             # do nothing
                     conf = deep_merge conf, load_files existing_files...
-                    finish.apply this, args
+                    finish args...
             else
                 conf = deep_merge conf, load_files files...
-                finish.apply this, args
+                finish args...
 
 
         # set a default cli invoke when enabled andnot function is given
