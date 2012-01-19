@@ -19,7 +19,10 @@ module.exports = config =
         return this
 
     defaults: (files...) ->
-        defaults = deep_merge defaults, load_files files...
+        if options['ignore unknown']
+            defaults = deep_merge defaults, ruthless_load_files files...
+        else
+            defaults = deep_merge defaults, load_files files...
         return this
 
     set: (key, value) ->
