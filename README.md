@@ -84,7 +84,7 @@ config.cli({
 }); // results only in config.user.name = opts.user (after config.load call)
 ```
 
-this sets up the command line interface. its basicly [node-cli](https://github.com/chriso/cli) with on little change: if cli result should be saved in config,
+this sets up the command line interface. its basically [node-cli](https://github.com/chriso/cli) with on little change: if cli result should be saved in config,
 the cli-array should be packed into a second (outer) array as second element (the first is the position in the config object).
 
 ### config.merge
